@@ -1,0 +1,20 @@
+# golang v1.20 on debian bullseye
+image: golang:1.20-bullseye
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - pwd
+    - ls -l
+    - go version
+
+test:
+  stage: test
+  script:
+    - pwd
+    - ls -l
+    - go version
