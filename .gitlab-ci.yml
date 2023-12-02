@@ -4,20 +4,29 @@ image: golang:1.20-bullseye
 stages:
   - build
   - test
+  - security
 
 build:
   stage: build
   script:
-    - pwd
-    - ls -l
-    - go version
+    - go build
 
 test:
   stage: test
   script:
-    - test -z $(go test ./...)
+    - go test ./...
+    - test -z $?
 
 formatting:
   stage: test
   script:
     - test -z $(gofmt -l .)
+
+security:
+  stage: test
+  before_script:
+    - go install github.com/securego/gosec/v2/cmd/gosec@latest
+  script:
+    - gosec ./...
+    - test -z $?
+
