@@ -15,7 +15,7 @@ test:
   stage: test
   script:
     - go test ./...
-    - test -z $?
+    - test $?
 
 formatting:
   stage: test
@@ -28,5 +28,5 @@ security:
     - go install github.com/securego/gosec/v2/cmd/gosec@latest
   script:
     - gosec ./...
-    - test -z $?
+    - test $?
 
