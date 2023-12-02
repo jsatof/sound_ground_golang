@@ -15,6 +15,9 @@ build:
 test:
   stage: test
   script:
-    - pwd
-    - ls -l
-    - go version
+    - test -z $(go test ./...)
+
+formatting:
+  stage: test
+  script:
+    - test -z $(gofmt -l .)
