@@ -2,27 +2,27 @@ package main
 
 import (
 	//"io"
-	"os"
 	"fmt"
+	"os"
 
 	"github.com/gordonklaus/portaudio"
 )
 
 const (
 	SampleFormatUnsupported int = 0
-	SampleFormatF64 = 1
+	SampleFormatF64             = 1
 )
 
 const (
 	CodecUnsupported int = 20
-	CodecWAV = 21
+	CodecWAV             = 21
 )
 
 type AudioProps struct {
-	Channels int
+	Channels   int
 	SampleRate int
-	Format int
-	Codec int
+	Format     int
+	Codec      int
 }
 
 // looking for the 'RIFF' header, and populate properties
@@ -50,4 +50,11 @@ func main() {
 
 	portaudio.Initialize()
 	defer portaudio.Terminate()
+	out := make([]int32, 8192)
+	stream, err := portaudio.OpenDefaultStream(0, 1, 44100, len(out), &out)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer stream.Close()
 }
